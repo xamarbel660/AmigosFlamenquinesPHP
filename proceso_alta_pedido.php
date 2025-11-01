@@ -6,10 +6,18 @@ $conexion = obtenerConexion();
 $idcliente = $_POST['lstCliente'];
 $fechaReserva = $_POST['fechaReserva'];
 $comentario = $_POST['textAreaComentario'];
-$total_price = $_POST['numPrecio'];
-
+$total_price = 0;
+$platosSeleccionados = $_POST['lstPlatos'];
 
 // No validamos, suponemos que la entrada de datos es correcta
+
+foreach ($platosSeleccionados as $id_plato) {
+    $sqlPrecio = "SELECT price FROM plate WHERE id_plate = $id_plato;";
+    $resultadoPrecio = mysqli_query($conexion, $sqlPrecio);
+    if ($filaPrecio = mysqli_fetch_assoc($resultadoPrecio)) {
+        $total_price += $filaPrecio['price'];
+    }
+}
 
 // Definir insert
 // El campo is_completed se pone a 0 por defecto, porque cuando se crea el pedido, no está completado

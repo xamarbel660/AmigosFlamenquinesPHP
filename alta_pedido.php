@@ -4,7 +4,7 @@ require_once("config.php");
 $conexion = obtenerConexion();
 
 $sql = "SELECT id_client,name FROM client;";
-$sql2 = "SELECT id_plate, name FROM plate;";
+$sql2 = "SELECT id_plate, name, price FROM plate;";
 
 $resultado = mysqli_query($conexion, $sql);
 $resultado2 = mysqli_query($conexion, $sql2);
@@ -17,7 +17,7 @@ while ($fila = mysqli_fetch_assoc($resultado)) {
 
 $platos = "";
 while ($fila = mysqli_fetch_assoc($resultado2)) {
-    $platos .= " <option value='" . $fila["id_plate"] . "'>" . $fila["name"] . "</option>";
+    $platos .= " <option value='" . $fila["id_plate"] . "'>" . $fila["name"] . "_________" . $fila["price"] . "€"."</option>";
 }
 
 // Obtener fecha y hora actual
@@ -59,17 +59,17 @@ include_once("cabecera.html");
                 </div>
 
                 <!-- Precio Pedido -->
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label class="col-xs-4 control-label" for="numPrecio">Precio:</label>
                     <div class="col-xs-4">
                         <input id="numPrecio" name="numPrecio" placeholder="12.50" class="form-control input-md" type="number" step="0.5" min="0" max="500">
                     </div>
-                </div>
+                </div> -->
                 <!-- Lista Platos -->
                 <div class="form-group">
                     <label class="col-xs-4 control-label" for="lstPlatos">Platos:</label>
                     <div class="col-xs-4">
-                        <select name="lstPlatos" id="lstPlatos" class="form-select" aria-label="Default select example">
+                        <select name="lstPlatos" id="lstPlatos" class="form-select" multiple aria-label="Default select example">
                             <?php echo $platos; ?>
                         </select>
                     </div>

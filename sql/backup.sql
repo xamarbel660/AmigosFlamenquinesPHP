@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: db
--- Tiempo de generación: 29-10-2025 a las 21:02:06
+-- Tiempo de generación: 30-10-2025 a las 08:45:19
 -- Versión del servidor: 8.0.43
 -- Versión de PHP: 8.2.27
 
@@ -34,6 +34,22 @@ CREATE TABLE `board` (
   `location` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Volcado de datos para la tabla `board`
+--
+
+INSERT INTO `board` (`id_board`, `created`, `capacity`, `location`) VALUES
+(1, '2023-01-01 10:00:00', 4, 'Salón Interior 1'),
+(2, '2023-01-01 10:00:00', 4, 'Salón Interior 2'),
+(3, '2023-01-01 10:00:00', 2, 'Salón Interior 3 (Ventana)'),
+(4, '2023-01-01 10:00:00', 6, 'Salón Interior 4 (Grupo)'),
+(5, '2023-01-01 10:00:00', 4, 'Terraza 1'),
+(6, '2023-01-01 10:00:00', 4, 'Terraza 2'),
+(7, '2023-01-01 10:00:00', 8, 'Terraza Grande (Mesa Alta)'),
+(8, '2023-01-01 10:00:00', 2, 'Barra 1'),
+(9, '2023-01-01 10:00:00', 2, 'Barra 2'),
+(10, '2023-01-01 10:00:00', 6, 'Reservado VIP');
+
 -- --------------------------------------------------------
 
 --
@@ -47,6 +63,22 @@ CREATE TABLE `client` (
   `is_vip` tinyint(1) NOT NULL,
   `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Volcado de datos para la tabla `client`
+--
+
+INSERT INTO `client` (`id_client`, `date_created_account`, `age`, `is_vip`, `name`) VALUES
+(1, '2023-01-15', 28, 1, 'Ana López'),
+(2, '2022-05-20', 45, 0, 'Carlos García'),
+(3, '2024-02-10', 19, 0, 'María Fernández'),
+(4, '2023-11-30', 52, 1, 'Javier Martínez'),
+(5, '2022-08-19', 34, 0, 'Lucía Sánchez'),
+(6, '2024-01-05', 65, 0, 'David Pérez'),
+(7, '2023-07-22', 29, 1, 'Sofía Gómez'),
+(8, '2022-03-10', 41, 0, 'Pedro Rodríguez'),
+(9, '2024-03-18', 22, 0, 'Elena Jiménez'),
+(10, '2023-09-01', 37, 1, 'Miguel Ruiz');
 
 -- --------------------------------------------------------
 
@@ -63,6 +95,22 @@ CREATE TABLE `client_order` (
   `id_client` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Volcado de datos para la tabla `client_order`
+--
+
+INSERT INTO `client_order` (`id_client_order`, `client_order_date`, `total_price`, `is_completed`, `comment`, `id_client`) VALUES
+(1, '2025-10-28 14:30:00', 30.50, 1, 'Comida en salón', 1),
+(2, '2025-10-28 21:00:00', 45.00, 1, 'Cena terraza', 2),
+(3, '2025-10-28 13:00:00', 15.50, 1, 'Para llevar', 3),
+(4, '2025-10-27 20:45:00', 88.00, 1, 'Mesa 4, pago dividido', 4),
+(5, '2025-10-27 14:00:00', 22.00, 1, 'Cliente habitual', 5),
+(6, '2025-10-26 21:30:00', 60.50, 1, 'Cliente VIP, descuento aplicado', 7),
+(7, '2025-10-26 15:00:00', 19.50, 1, 'Solo tapas y bebidas', 8),
+(8, '2025-10-25 20:00:00', 35.00, 1, 'Pago con tarjeta', 9),
+(9, '2025-10-25 14:30:00', 52.00, 1, '', 10),
+(10, '2025-10-29 12:30:00', 0.00, 0, 'Pedido en curso, mesa 1', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -75,6 +123,34 @@ CREATE TABLE `order_dish` (
   `quantity` int NOT NULL,
   `notes` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Volcado de datos para la tabla `order_dish`
+--
+
+INSERT INTO `order_dish` (`id_cash_order`, `id_plate`, `quantity`, `notes`) VALUES
+(1, 1, 1, 'Bien hecho'),
+(1, 2, 2, ''),
+(2, 3, 1, 'Sin miel, alergia'),
+(2, 4, 1, 'Poca sal'),
+(2, 10, 2, ''),
+(3, 1, 1, 'Para llevar, cortar en trozos'),
+(3, 5, 1, 'Extra picante'),
+(4, 2, 4, ''),
+(4, 6, 3, 'Ración y media'),
+(4, 7, 2, 'Al punto'),
+(5, 5, 1, ''),
+(5, 8, 1, ''),
+(6, 1, 2, 'Uno sin pimientos'),
+(6, 3, 2, ''),
+(6, 7, 1, 'Muy hecho'),
+(7, 2, 1, ''),
+(7, 5, 1, 'Con alioli extra'),
+(8, 6, 2, ''),
+(9, 4, 1, ''),
+(9, 10, 1, 'Con sirope de chocolate'),
+(10, 1, 1, 'En preparación'),
+(10, 2, 1, 'En preparación');
 
 -- --------------------------------------------------------
 
@@ -89,6 +165,22 @@ CREATE TABLE `plate` (
   `is_available` tinyint(1) NOT NULL,
   `name` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Volcado de datos para la tabla `plate`
+--
+
+INSERT INTO `plate` (`id_plate`, `added_date`, `price`, `is_available`, `name`) VALUES
+(1, '2023-01-01 12:00:00', 12.50, 1, 'Flamenquín Cordobés'),
+(2, '2023-01-01 12:00:00', 8.00, 1, 'Salmorejo'),
+(3, '2023-01-01 12:00:00', 9.50, 1, 'Berenjenas con Miel'),
+(4, '2023-01-01 12:00:00', 15.00, 1, 'Rabo de Toro'),
+(5, '2023-01-01 12:00:00', 7.50, 1, 'Patatas Bravas'),
+(6, '2023-01-01 12:00:00', 11.00, 1, 'Croquetas Caseras (Jamón)'),
+(7, '2023-01-01 12:00:00', 18.00, 1, 'Presa Ibérica'),
+(8, '2023-01-01 12:00:00', 14.50, 1, 'Flamenquín de Pollo y Serrano'),
+(9, '2023-01-01 12:00:00', 6.00, 0, 'Gazpacho (Solo temporada)'),
+(10, '2023-01-01 12:00:00', 5.50, 1, 'Tarta de Queso Casera');
 
 -- --------------------------------------------------------
 
@@ -105,6 +197,22 @@ CREATE TABLE `reservation` (
   `id_board` int NOT NULL,
   `id_client` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Volcado de datos para la tabla `reservation`
+--
+
+INSERT INTO `reservation` (`id_reservation`, `reservation_date`, `number_of_guests`, `is_night_reservation`, `comment`, `id_board`, `id_client`) VALUES
+(1, '2025-11-01 14:00:00', 4, 0, 'Comida', 1, 1),
+(2, '2025-11-01 21:00:00', 2, 1, 'Cena aniversario', 3, 2),
+(3, '2025-11-02 13:30:00', 6, 0, 'Con carrito de bebé', 4, 3),
+(4, '2025-11-02 20:30:00', 4, 1, 'Terraza si es posible', 5, 4),
+(5, '2025-11-03 14:15:00', 8, 0, 'Grupo grande', 7, 5),
+(6, '2025-11-03 21:00:00', 2, 1, 'Alergia al marisco', 8, 6),
+(7, '2025-11-04 15:00:00', 3, 0, 'Comida', 2, 7),
+(8, '2025-11-04 22:00:00', 5, 1, 'VIP', 10, 8),
+(9, '2025-11-05 13:00:00', 2, 0, 'Barra', 9, 9),
+(10, '2025-11-05 21:30:00', 4, 1, 'Cena tranquila', 6, 10);
 
 --
 -- Índices para tablas volcadas
@@ -158,31 +266,31 @@ ALTER TABLE `reservation`
 -- AUTO_INCREMENT de la tabla `board`
 --
 ALTER TABLE `board`
-  MODIFY `id_board` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id_board` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `client`
 --
 ALTER TABLE `client`
-  MODIFY `id_client` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id_client` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `client_order`
 --
 ALTER TABLE `client_order`
-  MODIFY `id_client_order` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id_client_order` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `plate`
 --
 ALTER TABLE `plate`
-  MODIFY `id_plate` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id_plate` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `id_reservation` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id_reservation` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Restricciones para tablas volcadas
