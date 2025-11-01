@@ -1,16 +1,16 @@
 <?php
-require_once("config.php");
+require_once("funcionesBD.php");
 
 $conexion = obtenerConexion();
 
-$sql = "SELECT id_client,name FROM client;";
+$sql = "SELECT idtipo,tipo FROM tipo;";
 
 $resultado = mysqli_query($conexion, $sql);
 
 $options = "";
 while ($fila = mysqli_fetch_assoc($resultado)) {
     // $tipos[] = $fila; // Insertar una fila al final
-    $options .= " <option value='" . $fila["id_client"] . "'>" . $fila["name"] . "</option>";
+    $options .= " <option value='" . $fila["idtipo"] . "'>" . $fila["tipo"] . "</option>";
 }
 
 // Cabecera HTML que incluye navbar

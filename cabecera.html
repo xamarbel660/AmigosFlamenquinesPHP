@@ -11,22 +11,81 @@
 		integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
 		crossorigin="anonymous"></script>
 	<style type="text/css">
-		body {
-			margin-left: 10px;
+		/* Colores de nuestra paleta */
+		:root {
+			--bs-primary: #881536;
+			--bs-secondary: #DA835E;
+			--bs-primary-rgb: 136, 21, 54;
 		}
 
-		#formularios {
-			margin-top: 60px;
+		.bg-primary {
+			background-color: var(--bs-primary) !important;
+		}
+
+		.bg-secondary {
+			background-color: var(--bs-secondary) !important;
+		}
+
+		/* Fuentes de letras */
+		body {
+			font-family: "Dosis", sans-serif;
+			font-optical-sizing: auto;
+			font-weight: 500;
+			font-style: normal;
+		}
+
+		footer {
+			font-family: "PT Serif", serif;
+			font-weight: 400;
+			font-style: normal;
+		}
+
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6 {
+			font-family: "PT Serif", serif;
+			font-weight: 700;
+			font-style: normal;
+		}
+
+		/* Fondo de la página */
+		.bg-cont-image {
+			background-image: url('../assets/img/img_decoracion_pagina/fondo_andaluz.jpg');
+			/* ajusta la ruta */
+			background-size: cover;
+			background-position: center;
+			background-repeat: no-repeat;
+			background-attachment: fixed;
+		}
+
+		/* Valores para el scrollspy de la pagina del menu */
+		/* Es para que el scrollspy se quede pegado en la parte superior */
+		.sticky-scrollspy {
+			top: 0px;
+			align-self: flex-start;
+		}
+
+		/* Estilo para el elemento activo del Scrollspy*/
+		.nav-link.active {
+			background-color: var(--bs-primary) !important;
+		}
+
+		/* Estilo para el efecto hover (Fondo: #881536 con opacidad) */
+		.nav-link:hover {
+			background-color: rgba(var(--bs-primary-rgb), 0.7) !important;
 		}
 	</style>
 	<title>Tienda informática</title>
 </head>
 
 <body>
-	<nav class="navbar navbar-expand-lg bg-body-tertiary">
+	<nav class="navbar navbar-expand-lg bg-body-tertiary bg-primary">
 		<div class="container-fluid">
-			<a class="navbar-brand" href="#">Tienda de informática</a>
-			<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+			<a class="navbar-brand text-light" href="index.php">Amigos Flamenquines</a>
+			<button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse"
 				data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
 				aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
@@ -34,9 +93,9 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+						<a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown"
 							aria-expanded="false">
-							Componentes
+							Reservas
 						</a>
 						<ul class="dropdown-menu">
 							<li><a class="dropdown-item" href="alta_componente.php">Alta de componentes</a></li>
@@ -48,13 +107,14 @@
 							<li><a class="dropdown-item" href="listado_componentes.php">Listado de componentes</a></li>
 							<li><a class="dropdown-item" href="listado_componentes_tipo.php">Listado de componentes por
 									tipo</a></li>
-							<li><a class="dropdown-item" href="listado_componentes_precio.php">Listado de componentes por precio</a></li>
+							<li><a class="dropdown-item" href="listado_componentes_precio.php">Listado de componentes
+									por precio</a></li>
 						</ul>
 					</li>
 					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+						<a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown"
 							aria-expanded="false">
-							Tipos de componentes
+							Clientes
 						</a>
 						<ul class="dropdown-menu">
 							<li><a class="dropdown-item" href="#">Alta de tipos de componentes</a></li>
@@ -62,7 +122,25 @@
 								<hr class="dropdown-divider">
 							</li>
 							<li><a class="dropdown-item" href="#">Listado de tipos de componentes</a></li>
-							<li><a class="dropdown-item" href="listado_tipo_componente.php">Buscar tipo de componente</a></li>
+							<li><a class="dropdown-item" href="listado_tipo_componente.php">Buscar tipo de
+									componente</a></li>
+						</ul>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown"
+							aria-expanded="false">
+							Pedidos
+						</a>
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item" href="alta_pedido.php">Alta de pedido</a></li>
+							<li><a class="dropdown-item" href="buscar_pedido.php">Buscar un pedido</a></li>
+							<li><a class="dropdown-item" href="listado_componentes.php">Modificar un pedido</a></li>
+							<li><a class="dropdown-item" href="listado_componentes_tipo.php">Borrar un pedido</a></li>
+							<li>
+								<hr class="dropdown-divider">
+							</li>
+							<li><a class="dropdown-item" href="listado_componentes_precio.php">Listado de pedidos</a></li>
+							<li><a class="dropdown-item" href="listado_componentes_precio.php">Listado de pedidos por</a></li>
 						</ul>
 					</li>
 				</ul>
