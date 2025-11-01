@@ -10,7 +10,7 @@ include_once("cabecera.html");
                 <legend>Alta de cliente</legend>
                 <!-- Nombre del cliente -->
                 <div class="form-group col-12">
-                    <label class="col-xs-4 control-label" for="lstCliente">Nombre: </label>
+                    <label class="col-xs-4 control-label" for="nombreCliente">Nombre: </label>
                     <div class="col-xs-4">
                         <input id="nombreCliente" name="nombreCliente" placeholder="Escribe aquí el nombre del cliente..."
                             class="form-control input-md" type="text">
@@ -20,7 +20,7 @@ include_once("cabecera.html");
                 <div class="row justify-content-between my-4 ">
                     <!-- Edad del cliente -->
                     <div class="form-group col-3">
-                        <label class="col-xs-4 control-label" for="lstCliente">Edad: </label>
+                        <label class="col-xs-4 control-label" for="edadCliente">Edad: </label>
                         <div class="col-xs-4">
                             <input id="edadCliente" name="edadCliente" value="18" class="form-control input-md"
                                 type="number" min="16" max="120">
@@ -31,13 +31,13 @@ include_once("cabecera.html");
                     <div class="form-group col-3">
                         <label for="">¿Cliente VIP?</label>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="radioVIP" id="radioVIPSi " value="S">
+                            <input class="form-check-input" type="radio" name="radioVIP" id="radioVIPSi " value="1">
                             <label class="form-check-label" for="radioVIPSi">
                                 Si
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="radioVIP" id="radioVIPNo" value="N" checked>
+                            <input class="form-check-input" type="radio" name="radioVIP" id="radioVIPNo" value="0" checked>
                             <label class="form-check-label" for="radioVIPNo">
                                 No
                             </label>
