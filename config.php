@@ -1,17 +1,31 @@
 <?php
+// Parámetros de conexión
+define('DB_HOST', 'db');
+define('DB_USER', 'root');
+define('DB_PASS', 'test');
+define('DB_NAME', 'amigosFlamenquines');
+define('DB_PORT'. '3306')
+
 function obtenerConexion() {
-    // Establecer conexión y opciones de mysql
-    // Errores mysql sin excepciones
-    mysqli_report(MYSQLI_REPORT_OFF);
+    // Activar excepciones en errores mysqli
+    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-    // Importante, ajustar los siguientes parámetros
-    $conexion = new mysqli("db", "root", "test", "amigosFlamenquines","3306");
-    // $conexion = mysqli_connect('db', 'root', 'test', "empresa");
-    mysqli_set_charset($conexion, 'utf8');
+    try {
+        // Establecer conexión y opciones de mysql
+        // Importante, ajustar los siguientes parámetros
+        $conexion = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT);
 
-    return $conexion;
+        $conexion->set_charset("utf8");
+
+        return $conexion;
+    } catch (mysqli_sql_exception $e) {
+        // Error en la base de datos
+        die("Error de conexión a la base de datos: " . $e->getMessage());
+    }
 }
 // funcion para cerrar la conexion
 function cerrarConexion($conexion) {
-    mysqli_close($conexion);
+    if ($conexion instanceof mysqli) {
+        $conexion->close();
+    }
 }
