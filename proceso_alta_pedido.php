@@ -6,7 +6,7 @@ $conexion = obtenerConexion();
 $idcliente = $_POST['lstCliente'];
 $fechaReserva = $_POST['fechaReserva'];
 $comentario = $_POST['textAreaComentario'];
-$precio = $_POST['numPrecio'];
+$total_price = $_POST['numPrecio'];
 
 
 // No validamos, suponemos que la entrada de datos es correcta
@@ -14,7 +14,7 @@ $precio = $_POST['numPrecio'];
 // Definir insert
 // El campo is_completed se pone a 0 por defecto, porque cuando se crea el pedido, no está completado
 $sql = "INSERT INTO client_order(`client_order_date`, `total_price`, `is_completed`, `comment`, `id_client`) 
-                VALUES ('" . $fechaReserva . "', '$precio', '0', '" . $comentario . "', $idcliente );";
+                VALUES ('" . $fechaReserva . "', '$total_price', '0', '" . $comentario . "', $idcliente );";
 
 // Ejecutar consulta
 $resultado = mysqli_query($conexion, $sql);

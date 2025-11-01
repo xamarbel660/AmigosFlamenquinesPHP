@@ -9,9 +9,11 @@ $resultado = mysqli_query($conexion, $sql);
 
 $options = "";
 while ($fila = mysqli_fetch_assoc($resultado)) {
-    // $tipos[] = $fila; // Insertar una fila al final
     $options .= " <option value='" . $fila["id_client"] . "'>" . $fila["name"] . "</option>";
 }
+
+date_default_timezone_set('Europe/Madrid');
+$fechaActual = date("d/m/Y H:i");
 
 // Cabecera HTML que incluye navbar
 include_once("cabecera.html");
@@ -19,7 +21,7 @@ include_once("cabecera.html");
 
 <div class="container" id="formularios">
     <div class="row">
-        <form class="form-horizontal" action="proceso_alta_cliente.php" name="frmAltaCliente" id="frmAltaCliente" method="post">
+        <form class="form-horizontal" action="proceso_alta_pedido.php" name="frmAltaPedido" id="frmAltaPedido" method="post">
             <fieldset>
                 <legend>Alta de Pedido</legend>
                 <!-- Lista Clientes -->
@@ -34,8 +36,7 @@ include_once("cabecera.html");
 
                 <!-- Fecha Reserva -->
                 <div class="form-group">
-                    <label for="fechaReserva">Selecciona fecha y hora:</label><br>
-                    <input type="datetime-local" id="fechaReserva" name="fechaReserva">
+                    <input type="hidden" id="fechaReserva" name="fechaReserva" value="<?php echo $fechaActual; ?>">
                 </div>
 
                 <!-- Comentario Pedido -->
