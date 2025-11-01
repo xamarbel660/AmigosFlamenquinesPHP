@@ -4,17 +4,27 @@ require_once("config.php");
 $conexion = obtenerConexion();
 
 $sql = "SELECT id_client,name FROM client;";
+$sql2 = "SELECT id_plate, name FROM plate;";
 
 $resultado = mysqli_query($conexion, $sql);
+$resultado2 = mysqli_query($conexion, $sql2);
 
-$options = "";
+
+$clientes = "";
 while ($fila = mysqli_fetch_assoc($resultado)) {
-    $options .= " <option value='" . $fila["id_client"] . "'>" . $fila["name"] . "</option>";
+    $clientes .= " <option value='" . $fila["id_client"] . "'>" . $fila["name"] . "</option>";
 }
 
-date_default_timezone_set('Europe/Madrid');
-$fechaActual = date("d/m/Y H:i");
+$platos = "";
+while ($fila = mysqli_fetch_assoc($resultado2)) {
+    $platos .= " <option value='" . $fila["id_plate"] . "'>" . $fila["name"] . "</option>";
+}
 
+// Obtener fecha y hora actual
+date_default_timezone_set('Europe/Madrid');
+$fechaActual = date("Y-m-d H:i");
+
+cerrarConexion($conexion);
 // Cabecera HTML que incluye navbar
 include_once("cabecera.html");
 ?>
@@ -26,10 +36,10 @@ include_once("cabecera.html");
                 <legend>Alta de Pedido</legend>
                 <!-- Lista Clientes -->
                 <div class="form-group">
-                    <label class="col-xs-4 control-label" for="lstCliente">Cliente</label>
+                    <label class="col-xs-4 control-label" for="lstCliente">Cliente:</label>
                     <div class="col-xs-4">
                         <select name="lstCliente" id="lstCliente" class="form-select" aria-label="Default select example">
-                            <?php echo $options; ?>
+                            <?php echo $clientes; ?>
                         </select>
                     </div>
                 </div>
@@ -41,18 +51,27 @@ include_once("cabecera.html");
 
                 <!-- Comentario Pedido -->
                 <div class="form-group">
-                    <label class="col-xs-4 control-label" for="textAreaComentario">Comentario</label>
+                    <label class="col-xs-4 control-label" for="textAreaComentario">Comentario:</label>
                     <div class="col-xs-4">
-                        <textarea name="textAreaComentario" id="textAreaComentario" placeholder="Comentario" cols="30"></textarea>
+                        <textarea name="textAreaComentario" id="textAreaComentario" placeholder="Comentario" cols="60"></textarea>
                     </div>
                     
                 </div>
 
                 <!-- Precio Pedido -->
                 <div class="form-group">
-                    <label class="col-xs-4 control-label" for="numPrecio">Precio</label>
+                    <label class="col-xs-4 control-label" for="numPrecio">Precio:</label>
                     <div class="col-xs-4">
                         <input id="numPrecio" name="numPrecio" placeholder="12.50" class="form-control input-md" type="number" step="0.5" min="0" max="500">
+                    </div>
+                </div>
+                <!-- Lista Platos -->
+                <div class="form-group">
+                    <label class="col-xs-4 control-label" for="lstPlatos">Platos:</label>
+                    <div class="col-xs-4">
+                        <select name="lstPlatos" id="lstPlatos" class="form-select" aria-label="Default select example">
+                            <?php echo $platos; ?>
+                        </select>
                     </div>
                 </div>
                 <!-- Button -->

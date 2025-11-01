@@ -4,7 +4,7 @@ define('DB_HOST', 'db');
 define('DB_USER', 'root');
 define('DB_PASS', 'test');
 define('DB_NAME', 'amigosFlamenquines');
-define('DB_PORT'. '3306')
+define('DB_PORT', '3306');
 
 function obtenerConexion() {
     // Activar excepciones en errores mysqli
