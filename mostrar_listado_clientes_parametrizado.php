@@ -6,12 +6,44 @@ $conexion = obtenerConexion();
 
 
 // Cabecera HTML que incluye navbar
-include_once("cabecera.html");
+include_once("form_listado_parametrizado_clientes.php");
 
-$tabla = "<table class='table table-striped text-center' id='listadoClientes'>";
+$sql = "SELECT * FROM client";
+$nombreCliente = trim($_GET["nombreCliente"] ?? "");
+$edadCliente = trim($_GET["edadCliente"] ?? "");
+$fechaAnyadido = trim($_GET["fechaAnyadido"] ?? "");
+$esVip = trim($_GET["lstEsVip"] ?? "");
+
+$condiciones = [];
+
+if ($nombreCliente !== "") {
+    $condiciones[] = "name LIKE '%$nombreCliente%'";
+}
+if ($edadCliente !== "") {
+    $condiciones[] = "age = " . intval($edadCliente);
+}
+if ($fechaAnyadido !== "") {
+    $condiciones[] = "date_created_account = '$fechaAnyadido'";
+}
+if ($esVip !== "-1") {
+    $condiciones[] = "is_vip = " . intval($esVip);
+}
+
+if (!empty($condiciones)) {
+    $sql .= " WHERE " . implode(" AND ", $condiciones);
+}
+
+$sql .= ";";
+
+
+
+
+
+
+$tabla = "<table class='table table-striped text-center mt-3' id='listadoClientes'>";
 $tabla .= "<thead><tr><th>ID-CLIENTE</th><th>NOMBRE</th><th>EDAD</th><th>ES VIP</th><th>FECHA AÑADIDO</th>";
 $idCliente = "";
-$sql = "SELECT * FROM client ORDER BY date_created_account";
+
     
 $resultado = mysqli_query($conexion, $sql);
 
@@ -36,8 +68,6 @@ while ($fila = mysqli_fetch_assoc($resultado)) {
 $tabla .= "</tbody></table>";
 
 ?>
-    <h2 class="text-center" style="
-        font-family: 'Open Sans', sans-serif;">Listado clientes almacenados</h2>
     <?php 
         echo $tabla; 
     ?>

@@ -8,7 +8,7 @@ $conexion = obtenerConexion();
 // Cabecera HTML que incluye navbar
 include_once("cabecera.html");
 
-$tabla = "<table class='table table-striped' id='listadoClientes'>";
+$tabla = "<table class='table table-striped text-center ' id='listadoClientes'>";
 $tabla .= "<thead><tr><th>ID-CLIENTE</th><th>NOMBRE</th><th>EDAD</th><th>ES VIP</th><th>FECHA AÑADIDO</th>";
 $tabla .= "<th>ACCIÓN</th>";
 $tabla.= "</tr></thead><tbody>";
@@ -39,10 +39,14 @@ while ($fila = mysqli_fetch_assoc($resultado)) {
     $tabla .= "<td>". $fila["name"] ."</td>";
     $tabla .= "<td>". $fila["age"] ."</td>";
     $tabla .= "<td>". $esVip ."</td>";
-    $tabla .= "<td>". $fila["date_created_account"] ."</td>";
+    $fecha = implode('-',array_reverse(explode('-',$fila['date_created_account'])));
+    $tabla .= "<td>". $fecha ."</td>";
     $tabla .= "<td><form class='d-inline me-1' action='form_editar_cliente.php' method='get'>";
     $tabla .= "<input type='hidden' name='cliente' value='" . htmlspecialchars(json_encode($fila),ENT_QUOTES) . "' />";
     $tabla .= "<button name='Editar' class='btn bg-secondary'><i class='bi bi-pencil-square'></i></button></form>";
+    $tabla .= "<form class='d-inline me-1' action='eliminar_cliente.php' method='post'>";
+    $tabla .= "<input type='hidden' name='idCliente' value='".$fila["id_client"]."' />";  
+    $tabla .= "<button type='submit' name='btnBorrar' class='btn btn-danger'><i class='bi bi-trash'></i></button> </form>";
 
             $tabla .= "</td></tr>";
        
