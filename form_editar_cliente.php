@@ -14,7 +14,7 @@ include_once("cabecera.html");
 ?>
     <div class="container" id="formularios">
     <div class="row">
-        <form class="form-horizontal" action="mostrar_listado_cliente_id.php" name="frmBuscarCliente" id="frmBuscarCliente" method="get">
+        <form class="form-horizontal" action="editar_cliente.php" name="frmEditarCliente" id="frmEditarCliente" method="post">
             <fieldset>
                 <!-- Form Name -->
                 <legend>Editar un cliente</legend>
@@ -28,19 +28,20 @@ include_once("cabecera.html");
                 <!-- Text input-->
                 <div class="form-group">
                     
-                    <p name="idCliente"> Id del cliente:
+                    <p> Id del cliente:
+                        <input type="hidden" name="idCliente" value="<?php echo $registroCliente['id_client']  ?>" >
                         <?php echo $registroCliente['id_client']  ?>
                     </p>
         
                 </div>
                 <div class="form-group">
-                    <label class="col-xs-4 control-label" for="idClienteBuscar">Nombre del cliente: </label>
+                    <label class="col-xs-4 control-label" for="nombreCliente">Nombre del cliente: </label>
                     <div class="col-xs-4">
-                        <input id="idCliente" name="idCliente" class="form-control input-md" type="text" value="<?php echo $registroCliente['name']  ?>">
+                        <input id="nombreCliente" name="nombreCliente" class="form-control input-md" type="text" value="<?php echo $registroCliente['name']  ?>">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-xs-4 control-label" for="idClienteBuscar">Edad del cliente: </label>
+                    <label class="col-xs-4 control-label" for="edadCliente">Edad del cliente: </label>
                     <div class="col-xs-4">
                         <input id="edadCliente" name="edadCliente" class="form-control input-md"
                         type="number" min="16" max="120" value="<?php echo $registroCliente['age']  ?>">
