@@ -10,8 +10,8 @@ $conexion = obtenerConexion();
 include_once("cabecera.html");
 ?>
 <div class="container" id="formularios">
-    <form class="form-horizontal row" action="mostrar_listado_clientes_parametrizado.php" name="frmListadoParametrizado"
-        id="frmListadoParametrizado" method="get">
+    <form class="form-horizontal row" action="mostrar_listado_clientes_parametrizado.php" name="frmListadoParametrizadoClientes"
+        id="frmListadoParametrizadoClientes" method="get">
         <fieldset>
             <!-- Form Name -->
             <legend>Listado Parametrizado de Clientes</legend>
