@@ -1,5 +1,6 @@
 <?php
 require_once("config.php");
+require_once("reserva.php");
 $conexion = obtenerConexion();
 
 include_once("cabecera.html");
