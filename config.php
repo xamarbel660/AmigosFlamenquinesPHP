@@ -29,3 +29,26 @@ function cerrarConexion($conexion) {
         $conexion->close();
     }
 }
+// función para responder en JSON
+function responder($datos, $ok, $mensaje, $conexion = null)
+{
+    // Cabecera indicando que la respuesta es JSON y con codificación UTF-8
+    header('Content-Type: application/json; charset=utf-8');
+
+    // Estructura de la respuesta que el frontend esperará:
+    // { ok: bool, datos: any, mensaje: string }
+    echo json_encode([
+        "ok" => $ok,
+        "datos" => $datos,
+        "mensaje" => $mensaje
+    ], JSON_UNESCAPED_UNICODE);
+
+    // Si nos pasan la conexión, la cerramos aquí para evitar fugas
+    if ($conexion) {
+        $conexion->close();
+    }
+
+    // exit con código 0 si ok==true, o 1 si ok==false.
+    // Esto detiene la ejecución del script inmediatamente.
+    exit($ok ? 0 : 1);
+}

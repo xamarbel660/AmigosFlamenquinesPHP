@@ -3,13 +3,20 @@
 
 <head>
 	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-	<!-- Enlaces a bootstrap-->
+	<!-- Enlaces de bootstrap-->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 	<script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
 		crossorigin="anonymous"></script>
+	<!-- Links de los fonts de google -->
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap" rel="stylesheet" />
+	<!-- icono -->
+	<link rel="icon" type="image/png" href="logo_restaurante.jpg">
+	<!-- Estilo -->
 	<style type="text/css">
 		/* Colores de nuestra paleta */
 		:root {
@@ -34,12 +41,6 @@
 			font-style: normal;
 		}
 
-		footer {
-			font-family: "PT Serif", serif;
-			font-weight: 400;
-			font-style: normal;
-		}
-
 		h1,
 		h2,
 		h3,
@@ -50,34 +51,8 @@
 			font-weight: 700;
 			font-style: normal;
 		}
-
-		/* Fondo de la página */
-		.bg-cont-image {
-			background-image: url('../assets/img/img_decoracion_pagina/fondo_andaluz.jpg');
-			/* ajusta la ruta */
-			background-size: cover;
-			background-position: center;
-			background-repeat: no-repeat;
-			background-attachment: fixed;
-		}
-
-		/* Valores para el scrollspy de la pagina del menu */
-		/* Es para que el scrollspy se quede pegado en la parte superior */
-		.sticky-scrollspy {
-			top: 0px;
-			align-self: flex-start;
-		}
-
-		/* Estilo para el elemento activo del Scrollspy*/
-		.nav-link.active {
-			background-color: var(--bs-primary) !important;
-		}
-
-		/* Estilo para el efecto hover (Fondo: #881536 con opacidad) */
-		.nav-link:hover {
-			background-color: rgba(var(--bs-primary-rgb), 0.7) !important;
-		}
 	</style>
+
 	<title>Amigos Flamenquines</title>
 </head>
 
@@ -128,8 +103,10 @@
 								<hr class="dropdown-divider">
 							</li>
 							<!-- Listados -->
-							<li><a class="dropdown-item" href="mostrar_listado_clientes.php">Mostrar clientes almacenados</a></li>
-							<li><a class="dropdown-item" href="form_listado_parametrizado_clientes.php">Listado de clientes parametrizado</a></li>
+							<li><a class="dropdown-item" href="mostrar_listado_clientes.php">Mostrar clientes
+									almacenados</a></li>
+							<li><a class="dropdown-item" href="form_listado_parametrizado_clientes.php">Listado de
+									clientes parametrizado</a></li>
 						</ul>
 					</li>
 					<!-- Pedidos -->
@@ -146,8 +123,10 @@
 							<li>
 								<hr class="dropdown-divider">
 							</li>
-							<li><a class="dropdown-item" href="listado_componentes_precio.php">Listado de pedidos</a></li>
-							<li><a class="dropdown-item" href="listado_componentes_precio.php">Listado de pedidos por</a></li>
+							<li><a class="dropdown-item" href="listado_componentes_precio.php">Listado de pedidos</a>
+							</li>
+							<li><a class="dropdown-item" href="listado_componentes_precio.php">Listado de pedidos
+									por</a></li>
 						</ul>
 					</li>
 				</ul>
