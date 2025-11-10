@@ -1,23 +1,41 @@
 <?php
-function obtenerReservas($conexion, $fecha = null, $reservaNoche = null) {
+function obtenerReservas($conexion, $cliente = null, $fecha = null, $numClientes = null, $reservaNoche = null, $mesa = null) {
     try {
-        $sql = "SELECT r.*, b.location AS boardLocation, c.name AS clientName
+        $sql = "SELECT r.*, b.location AS board_location, c.name AS client_name
                 FROM reservation r 
                 JOIN board b ON r.id_board = b.id_board
                 JOIN client c ON r.id_client = c.id_client";
         $params = [];
         $types = "";
 
-        if ($fecha) {
-            $fecha = date('Y-m-d', strtotime($fecha));
-            $sql .= " WHERE DATE(r.reservation_date) = ?";
-            $params[] = $fecha;
+        if ($cliente) {
+            $sql .= " WHERE r.id_client = ?";
+            $params[] = $cliente;
             $types .= "s";
-        } elseif ($reservaNoche !== null) {
+        }
+        if ($fecha) {
+            $inicio = $fecha . ' 00:00:00';
+            $fin    = $fecha . ' 23:59:59';
+            $sql .= "WHERE r.reservation_date >= ? AND r.reservation_date <= ?";
+            $params[] = $inicio;
+            $params[] = $fin;
+            $types .= "ss";
+        }
+        if ($numClientes) {
+            $sql .= " WHERE r.number_of_guests = ?";
+            $params[] = $numClientes;
+            $types .= "i";
+        }
+        if ($reservaNoche) {
             $reservaNoche = ($reservaNoche === 'true' || $reservaNoche === '1') ? 1 : 0;
             $sql .= " WHERE r.is_night_reservation = ?";
             $params[] = $reservaNoche;
             $types .= "i";
+        }
+        if ($mesa) {
+            $sql .= " WHERE r.id_board = ?";
+            $params[] = $mesa;
+            $types .= "s";
         }
 
         $sql .= " ORDER BY r.reservation_date ASC";
@@ -40,7 +58,8 @@ function obtenerReservas($conexion, $fecha = null, $reservaNoche = null) {
 }
 
 function generarTablaReservas($resultado) {
-    $mensaje = "<h2 class='text-center'>Listado de reservas</h2>";
+    $mensaje = "<div class='container'>";
+    $mensaje .= "<h2 class='text-center'>Listado de reservas</h2>";
     $mensaje .= "<table class='table table-striped'>";
     $mensaje .= "<thead><tr>
                     <th>ID_RESERVA</th>
@@ -54,14 +73,21 @@ function generarTablaReservas($resultado) {
                  </tr></thead><tbody>";
 
     while ($fila = $resultado->fetch_assoc()) {
+        $idReservation = $fila['id_reservation'];
+        $clientNameReservation = $fila['client_name'];
+        $reservationDateReservation = date('d-m-Y, H:i', strtotime($fila['reservation_date']));
+        $numberGuestsReservation = $fila['number_of_guests'];
+        $nightReservation = $fila['is_night_reservation']?"Sí":"No";
+        $boardLocationReservation = $fila['board_location'];
+        $commentReservation = $fila['comment'];
         $mensaje .= "<tr>
-                        <td>{$fila['id_reservation']}</td>
-                        <td>{$fila['clientName']}</td>
-                        <td>{$fila['reservation_date']}</td>
-                        <td>{$fila['number_of_guests']}</td>
-                        <td>{$fila['is_night_reservation']}</td>
-                        <td>{$fila['boardLocation']}</td>
-                        <td>{$fila['comment']}</td>
+                        <td>{$idReservation}</td>
+                        <td>{$clientNameReservation}</td>
+                        <td>{$reservationDateReservation}</td>
+                        <td>{$numberGuestsReservation}</td>
+                        <td>{$nightReservation}</td>
+                        <td>{$boardLocationReservation}</td>
+                        <td>{$commentReservation}</td>
                         <td>
                             <form class='d-inline me-1' action='editar_reserva.php' method='post'>
                                 <input type='hidden' name='reserva' value='" . htmlspecialchars(json_encode($fila), ENT_QUOTES) . "' />
@@ -75,7 +101,7 @@ function generarTablaReservas($resultado) {
                     </tr>";
     }
 
-    $mensaje .= "</tbody></table>";
+    $mensaje .= "</tbody></table></div>";
     return $mensaje;
 }
 
