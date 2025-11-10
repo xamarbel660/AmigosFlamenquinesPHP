@@ -14,10 +14,14 @@ $mesa = $_GET['selBoard'] ?? null;
 
 // Ejecutar consulta
 $resultado = obtenerReservas($conexion, $cliente, $fecha, $hora, $numClientes, $reservaNoche, $mesa);
+$mensaje = "<div class='container'>";
 
 if ($resultado === false) {
-    echo "<div class='alert alert-danger'>Error al obtener las reservas. Intenta más tarde.</div>";
+    $mensaje .= "<div class='alert alert-danger'>Error al obtener las reservas. Intenta más tarde.</div>";
 } else {
     // Mostrar resultados
-    echo generarTablaReservas($resultado);
+    $mensaje .= generarTablaReservas($resultado);
 }
+$mensaje .= "</div>";
+
+echo $mensaje;
