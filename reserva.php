@@ -1,41 +1,47 @@
 <?php
-function obtenerReservas($conexion, $cliente = null, $fecha = null, $numClientes = null, $reservaNoche = null, $mesa = null) {
+function obtenerReservas($conexion, $cliente = null, $fecha = null, $hora = null, $numClientes = null, $reservaNoche = null, $mesa = null) {
     try {
         $sql = "SELECT r.*, b.location AS board_location, c.name AS client_name
                 FROM reservation r 
                 JOIN board b ON r.id_board = b.id_board
                 JOIN client c ON r.id_client = c.id_client";
         $params = [];
+        $where = [];
         $types = "";
 
         if ($cliente) {
-            $sql .= " WHERE r.id_client = ?";
+            $where[] = "r.id_client = ?";
             $params[] = $cliente;
             $types .= "s";
         }
         if ($fecha) {
-            $inicio = $fecha . ' 00:00:00';
-            $fin    = $fecha . ' 23:59:59';
-            $sql .= "WHERE r.reservation_date >= ? AND r.reservation_date <= ?";
-            $params[] = $inicio;
-            $params[] = $fin;
-            $types .= "ss";
+            $where[] = "DATE(r.reservation_date) = ?";
+            $params[] = $fecha;
+            $types .= "s";
+        }
+        if ($hora) {
+            $where[] = "TIME(r.reservation_date) = ?";
+            $params[] = $hora;
+            $types .= "s";
         }
         if ($numClientes) {
-            $sql .= " WHERE r.number_of_guests = ?";
+            $where[] = "r.number_of_guests = ?";
             $params[] = $numClientes;
             $types .= "i";
         }
-        if ($reservaNoche) {
-            $reservaNoche = ($reservaNoche === 'true' || $reservaNoche === '1') ? 1 : 0;
-            $sql .= " WHERE r.is_night_reservation = ?";
+        if ($reservaNoche !== '') {
+            $where[] = "r.is_night_reservation = ?";
             $params[] = $reservaNoche;
             $types .= "i";
         }
         if ($mesa) {
-            $sql .= " WHERE r.id_board = ?";
+            $where[] = "r.id_board = ?";
             $params[] = $mesa;
             $types .= "s";
+        }
+
+        if (!empty($where)) {
+            $sql .= " WHERE " . implode(" AND ", $where);
         }
 
         $sql .= " ORDER BY r.reservation_date ASC";
@@ -65,7 +71,8 @@ function generarTablaReservas($resultado) {
                     <th>ID_RESERVA</th>
                     <th>CLIENTE</th>
                     <th>DIA_RESERVA</th>
-                    <th>NUM_CLIENTES</th>
+                    <th>HORA_RESERVA</th>
+                    <th>NUM_INVITADOS</th>
                     <th>RESERVA_NOCHE</th>
                     <th>MESA</th>
                     <th>COMENTARIOS</th>
@@ -75,7 +82,8 @@ function generarTablaReservas($resultado) {
     while ($fila = $resultado->fetch_assoc()) {
         $idReservation = $fila['id_reservation'];
         $clientNameReservation = $fila['client_name'];
-        $reservationDateReservation = date('d-m-Y, H:i', strtotime($fila['reservation_date']));
+        $reservationDateReservation = date('d-m-Y', strtotime($fila['reservation_date']));
+        $reservationTimeReservation = date('H:i:s', strtotime($fila['reservation_date']));
         $numberGuestsReservation = $fila['number_of_guests'];
         $nightReservation = $fila['is_night_reservation']?"Sí":"No";
         $boardLocationReservation = $fila['board_location'];
@@ -84,6 +92,7 @@ function generarTablaReservas($resultado) {
                         <td>{$idReservation}</td>
                         <td>{$clientNameReservation}</td>
                         <td>{$reservationDateReservation}</td>
+                        <td>{$reservationTimeReservation}</td>
                         <td>{$numberGuestsReservation}</td>
                         <td>{$nightReservation}</td>
                         <td>{$boardLocationReservation}</td>
