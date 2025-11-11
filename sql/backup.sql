@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: db
--- Tiempo de generación: 30-10-2025 a las 08:45:19
+-- Tiempo de generación: 11-11-2025 a las 07:38:22
 -- Versión del servidor: 8.0.43
 -- Versión de PHP: 8.2.27
 
@@ -109,7 +109,12 @@ INSERT INTO `client_order` (`id_client_order`, `client_order_date`, `total_price
 (7, '2025-10-26 15:00:00', 19.50, 1, 'Solo tapas y bebidas', 8),
 (8, '2025-10-25 20:00:00', 35.00, 1, 'Pago con tarjeta', 9),
 (9, '2025-10-25 14:30:00', 52.00, 1, '', 10),
-(10, '2025-10-29 12:30:00', 0.00, 0, 'Pedido en curso, mesa 1', 1);
+(10, '2025-10-29 12:30:00', 0.00, 0, 'Pedido en curso, mesa 1', 1),
+(15, '2025-11-10 18:07:00', 59.50, 0, 'Pago con platinum', 1),
+(16, '2025-11-10 18:07:00', 59.50, 0, 'Pago con platinum', 1),
+(17, '2025-11-10 18:17:00', 23.50, 0, 'Platinum', 1),
+(18, '2025-11-10 18:17:00', 23.50, 0, 'Platinum', 1),
+(19, '2025-11-10 18:18:00', 24.50, 0, 'Pago con modenas del monopoli', 1);
 
 -- --------------------------------------------------------
 
@@ -118,7 +123,7 @@ INSERT INTO `client_order` (`id_client_order`, `client_order_date`, `total_price
 --
 
 CREATE TABLE `order_dish` (
-  `id_cash_order` int NOT NULL,
+  `id_client_order` int NOT NULL,
   `id_plate` int NOT NULL,
   `quantity` int NOT NULL,
   `notes` varchar(100) NOT NULL
@@ -128,7 +133,7 @@ CREATE TABLE `order_dish` (
 -- Volcado de datos para la tabla `order_dish`
 --
 
-INSERT INTO `order_dish` (`id_cash_order`, `id_plate`, `quantity`, `notes`) VALUES
+INSERT INTO `order_dish` (`id_client_order`, `id_plate`, `quantity`, `notes`) VALUES
 (1, 1, 1, 'Bien hecho'),
 (1, 2, 2, ''),
 (2, 3, 1, 'Sin miel, alergia'),
@@ -150,7 +155,11 @@ INSERT INTO `order_dish` (`id_cash_order`, `id_plate`, `quantity`, `notes`) VALU
 (9, 4, 1, ''),
 (9, 10, 1, 'Con sirope de chocolate'),
 (10, 1, 1, 'En preparación'),
-(10, 2, 1, 'En preparación');
+(10, 2, 1, 'En preparación'),
+(18, 1, 1, ''),
+(18, 10, 2, ''),
+(19, 1, 1, ''),
+(19, 9, 2, '');
 
 -- --------------------------------------------------------
 
@@ -241,7 +250,7 @@ ALTER TABLE `client_order`
 -- Indices de la tabla `order_dish`
 --
 ALTER TABLE `order_dish`
-  ADD PRIMARY KEY (`id_cash_order`,`id_plate`),
+  ADD PRIMARY KEY (`id_client_order`,`id_plate`),
   ADD KEY `FK_OrderDish_Plate` (`id_plate`) USING BTREE;
 
 --
@@ -278,7 +287,7 @@ ALTER TABLE `client`
 -- AUTO_INCREMENT de la tabla `client_order`
 --
 ALTER TABLE `client_order`
-  MODIFY `id_client_order` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_client_order` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT de la tabla `plate`
@@ -306,7 +315,7 @@ ALTER TABLE `client_order`
 -- Filtros para la tabla `order_dish`
 --
 ALTER TABLE `order_dish`
-  ADD CONSTRAINT `FK_OrderDish_CashOrder` FOREIGN KEY (`id_cash_order`) REFERENCES `client_order` (`id_client_order`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_OrderDish_CashOrder` FOREIGN KEY (`id_client_order`) REFERENCES `client_order` (`id_client_order`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `FK_OrderDish_Plate` FOREIGN KEY (`id_plate`) REFERENCES `plate` (`id_plate`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --

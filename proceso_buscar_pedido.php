@@ -23,9 +23,9 @@ if (mysqli_num_rows($resultado) > 0) { // Mostrar tabla de datos, hay datos
     while ($fila = mysqli_fetch_assoc($resultado)) {
         $mensaje .= "<tr>";
         $mensaje .= "<td>" . $fila['name'] . "</td>";
-        // 1. Creamos un objeto de Fecha con el valor que viene de la base de datos
+        //Creamos un objeto de Fecha con el valor que viene de la base de datos
         $fecha_pedido = new DateTime($fila['client_order_date']);
-        // 2. Le damos el formato 'día/mes/Año' que quieres
+        //Le damos el formato 'día/mes/Año' que quieres
         $mensaje .= "<td>" . $fecha_pedido->format('d/m/Y') . "</td>";
         // $mensaje .= "<td>" . $fila['client_order_date'] . "</td>";
         $mensaje .= "<td>" . $fila['comment'] . "</td>";
@@ -35,7 +35,7 @@ if (mysqli_num_rows($resultado) > 0) { // Mostrar tabla de datos, hay datos
         // Formulario en la celda para procesar borrado del registro
         // input hidden para enviar idcomponente a borrar
         $mensaje .= "<td><form class='d-inline me-1' action='editar_pedido.php' method='post'>";
-        $mensaje .= "<input type='hidden' name='componente' value='" . htmlspecialchars(json_encode($fila), ENT_QUOTES) . "' />";
+        $mensaje .= "<input type='hidden' name='pedido' value='" . htmlspecialchars(json_encode($fila), ENT_QUOTES) . "' />";
         $mensaje .= "<button name='Editar' class='btn btn-primary'><i class='bi bi-pencil-square'></i></button></form>";
 
         $mensaje .= "<form class='d-inline' action='proceso_borrar_pedido.php' method='post'>";

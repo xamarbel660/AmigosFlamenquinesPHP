@@ -106,7 +106,7 @@ include_once("cabecera.html");
 </div>
 
 <script>
-    const bdUrl = "http://127.0.0.1/amigosFlamenquinesPHP/";
+    let bdUrl = "http://127.0.0.1/amigosFlamenquinesPHP/";
     // variable para almacenar los platos seleccionados y sus cantidades
     let platosSeleccionadosData = [];
 
