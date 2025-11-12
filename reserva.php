@@ -1,7 +1,7 @@
 <?php
 function obtenerReservas($conexion, $cliente = null, $fecha = null, $hora = null, $numClientes = null, $reservaNoche = null, $mesa = null) {
     try {
-        $sql = "SELECT r.*, b.location AS board_location, c.name AS client_name
+        $sql = "SELECT r.*, b.location AS board_location, c.name AS client_name, c.is_vip AS client_is_vip
                 FROM reservation r 
                 JOIN board b ON r.id_board = b.id_board
                 JOIN client c ON r.id_client = c.id_client";
@@ -61,60 +61,6 @@ function obtenerReservas($conexion, $cliente = null, $fecha = null, $hora = null
         error_log("Error al obtener reservas: " . $e->getMessage());
         return false;
     }
-}
-
-function generarTablaReservas($resultado) {
-    $mensaje = "<h2 class='text-center'>Listado de reservas</h2>";
-    $mensaje .= "<table class='table table-striped'>";
-    $mensaje .= "<thead><tr>
-                    <th>CLIENTE</th>
-                    <th>DIA_RESERVA</th>
-                    <th>HORA_RESERVA</th>
-                    <th>NUM_INVITADOS</th>
-                    <th>RESERVA_NOCHE</th>
-                    <th>MESA</th>
-                    <th>COMENTARIOS</th>
-                    <th>ACCIONES</th>
-                 </tr></thead><tbody>";
-
-    while ($fila = $resultado->fetch_assoc()) {
-        $idReservation = $fila['id_reservation'];
-        $clientNameReservation = $fila['client_name'];
-        $reservationDateReservation = date('d-m-Y', strtotime($fila['reservation_date']));
-        $reservationTimeReservation = date('H:i:s', strtotime($fila['reservation_date']));
-        $numberGuestsReservation = $fila['number_of_guests'];
-        $nightReservation = $fila['is_night_reservation']?"Sí":"No";
-        $boardLocationReservation = $fila['board_location'];
-        $commentReservation = $fila['comment'];
-        $mensaje .= "<tr>
-                        <td>{$clientNameReservation}</td>
-                        <td>{$reservationDateReservation}</td>
-                        <td>{$reservationTimeReservation}</td>
-                        <td>{$numberGuestsReservation}</td>
-                        <td>{$nightReservation}</td>
-                        <td>{$boardLocationReservation}</td>
-                        <td>{$commentReservation}</td>
-                        <td>
-                            <form class='d-inline me-1' action='editar_reserva.php' method='post'>
-                                <input type='hidden' name='id_reservation' value='" . $idReservation . "' />
-                                <input type='hidden' name='reservation_date' value='" . $fila['reservation_date'] . "' />
-                                <input type='hidden' name='number_of_guests' value='" . $numberGuestsReservation . "' />
-                                <input type='hidden' name='is_night_reservation' value='" . $nightReservation . "' />
-                                <input type='hidden' name='comment' value='" . $commentReservation . "' />
-                                <input type='hidden' name='id_board' value='" . $fila["id_board"] . "' />
-                                <input type='hidden' name='id_client' value='" . $fila["id_client"] . "' />
-                                <button name='Editar' class='btn btn-primary'><i class='bi bi-pencil-square'></i></button>
-                            </form>
-                            <form class='d-inline' action='borrar_reserva.php' method='post'>
-                                <input type='hidden' name='id_reservation' value='{$idReservation}' />
-                                <button name='Borrar' class='btn btn-danger'><i class='bi bi-trash'></i></button>
-                            </form>
-                        </td>
-                    </tr>";
-    }
-
-    $mensaje .= "</tbody></table>";
-    return $mensaje;
 }
 
 function crearReserva($conexion, $fechaHora, $numInvitados, $esNoche, $comentario, $idBoard, $idCliente) {
@@ -215,6 +161,61 @@ function borrarReserva($conexion, $idReserva) {
         error_log("Error al borrar la reserva: " . $e->getMessage());
         return false;
     } 
+}
+
+function generarTablaReservas($resultado) {
+    $mensaje = "<h2 class='text-center'>Listado de reservas</h2>";
+    $mensaje .= "<table class='table table-striped text-center'>";
+    $mensaje .= "<thead><tr>
+                    <th>CLIENTE</th>
+                    <th>DIA_RESERVA</th>
+                    <th>HORA_RESERVA</th>
+                    <th>NUM_INVITADOS</th>
+                    <th>RESERVA_NOCHE</th>
+                    <th>MESA</th>
+                    <th>COMENTARIOS</th>
+                    <th>ACCIONES</th>
+                 </tr></thead><tbody>";
+
+    while ($fila = $resultado->fetch_assoc()) {
+        $idReservation = $fila['id_reservation'];
+        $clientNameReservation = $fila['client_name'];
+        $clientIsVip = $fila['client_is_vip']?"VIP":"";
+        $reservationDateReservation = date('d-m-Y', strtotime($fila['reservation_date']));
+        $reservationTimeReservation = date('H:i:s', strtotime($fila['reservation_date']));
+        $numberGuestsReservation = $fila['number_of_guests'];
+        $nightReservation = $fila['is_night_reservation']?"Sí":"No";
+        $boardLocationReservation = $fila['board_location'];
+        $commentReservation = $fila['comment'];
+        $mensaje .= "<tr>
+                        <td>{$clientNameReservation}<sup> {$clientIsVip}</sup></td>
+                        <td>{$reservationDateReservation}</td>
+                        <td>{$reservationTimeReservation}</td>
+                        <td>{$numberGuestsReservation}</td>
+                        <td>{$nightReservation}</td>
+                        <td>{$boardLocationReservation}</td>
+                        <td>{$commentReservation}</td>
+                        <td>
+                            <form class='d-inline me-1' action='editar_reserva.php' method='post'>
+                                <input type='hidden' name='id_reservation' value='" . $idReservation . "' />
+                                <input type='hidden' name='reservation_date' value='" . $fila['reservation_date'] . "' />
+                                <input type='hidden' name='number_of_guests' value='" . $numberGuestsReservation . "' />
+                                <input type='hidden' name='is_night_reservation' value='" . $nightReservation . "' />
+                                <input type='hidden' name='comment' value='" . $commentReservation . "' />
+                                <input type='hidden' name='id_board' value='" . $fila["id_board"] . "' />
+                                <input type='hidden' name='id_client' value='" . $fila["id_client"] . "' />
+                                <button name='Editar' class='btn btn-primary'><i class='bi bi-pencil-square'></i></button>
+                            </form>
+                            <form class='d-inline' action='borrar_reserva.php' method='post'>
+                                <input type='hidden' name='id_reservation' value='{$idReservation}' />
+                                <button name='Borrar' class='btn btn-danger'><i class='bi bi-trash'></i></button>
+                            </form>
+                        </td>
+                    </tr>";
+    }
+
+    $mensaje .= "</tbody></table>";
+    return $mensaje;
 }
 
 function obtenerMesas($conexion) {

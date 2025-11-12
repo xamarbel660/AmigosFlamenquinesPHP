@@ -20,7 +20,7 @@ $clientes = obtenerClientes($conexion);
                     <label class="col-xs-4 control-label" for="selClient">Cliente: </label>
                     <div class="col-xs-4">
                         <select id="selClient" name="selClient" class="form-control input-md">
-                            <option value="">-- Selecciona un cliente --</option>
+                            <option value="">-- Sin filtro --</option>
                             <?php foreach ($clientes as $cliente): ?>
                                 <option value="<?= $cliente['id_client'] ?>"><?= htmlspecialchars($cliente['name']) ?></option>
                             <?php endforeach; ?>
@@ -96,5 +96,12 @@ $clientes = obtenerClientes($conexion);
     <?php endif; ?>
 </div>
 </body>
-
+<script>
+    new SlimSelect({
+        select: '#selClient'
+    })
+    new SlimSelect({
+        select: '#selBoard'
+    })
+</script>
 </html>

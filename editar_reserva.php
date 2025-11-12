@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["accion"] === "editar") {
 }
 ?>
 <div class="container" id="formularios">
-    <form class="form-horizontal" name="frmAltaReserva" id="frmAltaReserva"
+    <form class="form-horizontal" name="frmEditarReserva" id="frmEditarReserva"
         method="post">
         <fieldset class="row ">
             <legend>Editar reserva</legend>
@@ -91,11 +91,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["accion"] === "editar") {
             
             <!-- Button -->
             <div class="form-group">
-                <label class="col-xs-4 control-label" for="btnAceptarAltaReserva"></label>
+                <label class="col-xs-4 control-label" for="btnAceptarEditarReserva"></label>
                 <div class="col-xs-4">
                     <input type="hidden" name="id_reservation" value="<?= $idReserva ?>">
                     <input type="hidden" name="accion" value="editar">
-                    <input type="submit" id="btnAceptarAltaReserva" name="btnAceptarAltaReserva"
+                    <input type="submit" id="btnAceptarEditarReserva" name="btnAceptarEditarReserva"
                         class="btn bg-secondary" value="Editar" />
                 </div>
             </div>
