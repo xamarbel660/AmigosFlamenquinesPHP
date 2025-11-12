@@ -52,6 +52,7 @@ if (mysqli_errno($conexion) != 0) {
     $mensaje =  "<h2 class='text-center mt-5'>Componente actualizado</h2>";
 }
 
+header( header: "refresh:5;url=index.php" );
 // Aquí empieza la página
 include_once("cabecera.html");
 
