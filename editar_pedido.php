@@ -103,7 +103,7 @@ include_once("cabecera.html");
                         <!-- Cantidad de platos -->
                         <input class="col-2 border-end-0" type="number" name="cantidadPlatos" id="cantidadPlatos" min="1" max="20" value="1">
                         <!-- Cantidad de platos -->
-                        <button class="btn btn-primary rounded-end-2 col-2" type="button" id="añadirPlato" name="añadirPlato">Agregar</button>
+                        <button class="btn rounded-end-2 col-2 bg-secondary" type="button" id="añadirPlato" name="añadirPlato">Agregar</button>
                         <!-- Label para poder que ocupe el espacio necesario para que quede bien -->
                         <div class="col-1 col-md-3">
                             <label for=""></label>
@@ -132,7 +132,7 @@ include_once("cabecera.html");
                 <div class="form-group">
                     <label class="col-xs-4 control-label" for="btnAceptarAltaComponente"></label>
                     <div class="col-xs-4">
-                        <input type="submit" id="btnAceptarAltaComponente" name="btnAceptarAltaComponente" class="btn btn-primary" value="Aceptar" />
+                        <input type="submit" id="btnAceptarAltaComponente" name="btnAceptarAltaComponente" class="btn bg-secondary" value="Aceptar" />
                     </div>
                 </div>
             </fieldset>

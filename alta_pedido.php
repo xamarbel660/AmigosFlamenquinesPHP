@@ -68,7 +68,7 @@ include_once("cabecera.html");
                         <!-- Cantidad de platos -->
                         <input class="col-2 border-end-0" type="number" name="cantidadPlatos" id="cantidadPlatos" min="1" max="20" value="1">
                         <!-- Cantidad de platos -->
-                        <button class="btn btn-primary rounded-end-2 col-2" type="button" id="añadirPlato" name="añadirPlato">Agregar</button>
+                        <button class="btn bg-secondary rounded-end-2 col-2" type="button" id="añadirPlato" name="añadirPlato">Agregar</button>
                         <!-- Label para poder que ocupe el espacio necesario para que quede bien -->
                         <div class="col-1 col-md-3">
                             <label for=""></label>
