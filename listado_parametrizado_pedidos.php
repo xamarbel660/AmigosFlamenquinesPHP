@@ -1,4 +1,17 @@
 <?php
+require_once("config.php");
+
+$conexion = obtenerConexion();
+
+$sqlCli = "SELECT id_client,name FROM client;";
+
+$resultadoCLi = mysqli_query($conexion, $sqlCli);
+
+//Lista de clientes
+$clientes = "";
+while ($fila = mysqli_fetch_assoc($resultadoCLi)) {
+    $clientes .= " <option value='" . $fila["id_client"] . "'>" . $fila["name"] . "</option>";
+}
 // Cabecera HTML que incluye navbar
 include_once("cabecera.html");
 ?>
@@ -12,8 +25,10 @@ include_once("cabecera.html");
             <div class="form-group col-12 mb-2">
                 <label class="col-xs-4 control-label" for="nombreCliente">Cliente: </label>
                 <div class="col-xs-4">
-                    <input id="nombreCliente" name="nombreCliente" class="form-control input-md" type="text"
-                        placeholder="Ana Lopez">
+                    <select class="form-select col-7 col-md-5" name="lstClientes" id="lstClientes" aria-label="Default select example">
+                        <option value="0">Selecione un cliente</option>
+                        <?php echo $clientes; ?>
+                    </select>
                 </div>
             </div>
 
@@ -43,10 +58,10 @@ include_once("cabecera.html");
                 <label class="col-xs-4 control-label" for="inpPrecio">Rango de precios</label>
                 <div class="col-xs-4">
                     <label for="">Precio min</label>
-                    <input type="number" name="inpPrecio" id="inpPrecioMin" value="0" required></input>
+                    <input type="number" name="inpPrecioMin" id="inpPrecioMin" placeholder="0" min="0" step="0.5"></input>
                     <br>
                     <label for="">Precio max</label>
-                    <input type="number" name="inpPrecio" id="inpPrecioMax" value="700" max="701" required></input>
+                    <input type="number" name="inpPrecioMax" id="inpPrecioMax" placeholder="700" max="700" step="0.5"></input>
                 </div>
             </div>
 
