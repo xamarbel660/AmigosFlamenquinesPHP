@@ -39,7 +39,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["accion"] === "editar") {
                     <label class="col-xs-4 control-label" for="id_client">Cliente: </label>
                     <div class="col-xs-4">
                         <select id="id_client" name="id_client" class="form-control input-md" required>
-                            <option value="">-- Selecciona un cliente --</option>
                             <?php foreach ($clientes as $cliente): ?>
                                 <option value="<?= $cliente['id_client'] ?>" <?= $idCliente == $cliente['id_client'] ? 'selected' : '' ?>><?= htmlspecialchars($cliente['name']) ?></option>
                             <?php endforeach; ?>
@@ -112,5 +111,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["accion"] === "editar") {
     <?php endif; ?>
 </div>
 </body>
-
+<script>
+    new SlimSelect({
+        select: '#id_client'
+    })
+    new SlimSelect({
+        select: '#id_board'
+    })
+</script>
 </html>

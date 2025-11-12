@@ -10,19 +10,28 @@ $sql = "SELECT id_client,name FROM client;";
 
 $resultado = mysqli_query($conexion, $sql);
 
-$options = "";
+$clientes = "";
 while ($fila = mysqli_fetch_assoc($resultado)) {
     // Si coincide el tipo con el del componente es el que debe aparecer seleccionado (selected)
     if ($fila['id_client'] == $pedidoEntero['id_client']) {
-        $options .= " <option selected value='" . $fila["id_client"] . "'>" . $fila["name"] . "</option>";
+        $clientes .= " <option selected value='" . $fila["id_client"] . "'>" . $fila["name"] . "</option>";
     } else {
-        $options .= " <option value='" . $fila["id_client"] . "'>" . $fila["name"] . "</option>";
+        $clientes .= " <option value='" . $fila["id_client"] . "'>" . $fila["name"] . "</option>";
     }
 }
 
 $fecha_pedido = new DateTime($pedidoEntero['client_order_date']);
 //Le damos el formato 'día/mes/Año' que quieres
 $fecha_bien = $fecha_pedido->format('Y-m-d H:i');
+
+$sqlPlat = "SELECT id_plate, name, price FROM plate;";
+$resultadoPlat = mysqli_query($conexion, $sqlPlat);
+
+//Lista de platos
+$platos = "";
+while ($fila = mysqli_fetch_assoc($resultadoPlat)) {
+    $platos .= " <option value='" . $fila["id_plate"] . "'>" . $fila["name"] . "__" . $fila["price"] . "€" . "</option>";
+}
 
 // Cabecera HTML que incluye navbar
 include_once("cabecera.html");
@@ -38,7 +47,7 @@ include_once("cabecera.html");
                     <label class="col-xs-4 control-label" for="lstCliente">Cliente</label>
                     <div class="col-xs-4">
                         <select name="lstCliente" id="lstCliente" class="form-select" aria-label="Default select example">
-                            <?php echo $options; ?>
+                            <?php echo $clientes; ?>
                         </select>
                     </div>
                 </div>
@@ -84,16 +93,39 @@ include_once("cabecera.html");
                     </div>
                 </div>
 
-                <!-- Platos -->
-                <div id="platos">
-
+                <!-- Lista Platos -->
+                <div class="row mb-3">
+                    <label class="col-12 control-label" for="lstPlatos">Platos:</label>
+                    <div class="col-12 input-group mb-3">
+                        <select class="form-select col-7 col-md-5" name="lstPlatos" id="lstPlatos" aria-label="Default select example">
+                            <?php echo $platos; ?>
+                        </select>
+                        <!-- Cantidad de platos -->
+                        <input class="col-2 border-end-0" type="number" name="cantidadPlatos" id="cantidadPlatos" min="1" max="20" value="1">
+                        <!-- Cantidad de platos -->
+                        <button class="btn btn-primary rounded-end-2 col-2" type="button" id="añadirPlato" name="añadirPlato">Agregar</button>
+                        <!-- Label para poder que ocupe el espacio necesario para que quede bien -->
+                        <div class="col-1 col-md-3">
+                            <label for=""></label>
+                        </div>
+                    </div>
+                    <div class="col-12 input-group mb-3">
+                        <label class="col-12 control-label" for="notaPlato">Nota </label>
+                        <textarea placeholder="Sin mucha sal" id="notaPlato" cols="40"></textarea>
+                    </div>
                 </div>
 
+                <!-- Lista Platos Selecionadas-->
+                <div class="row mb-3">
+                    <label class="col-xs-4 control-label" for="lstPlatosSelect">Platos Selecionados:</label>
+                    <div class="col-xs-4">
+                        <select name="lstPlatosSelect" id="lstPlatosSelect" class="form-select" multiple aria-label="Default select example">
 
+                        </select>
+                    </div>
+                </div>
 
-
-
-
+                <input type="hidden" name="platos_con_cantidad" id="platos_con_cantidad">
 
                 <input value="<?php echo $pedidoEntero['id_client_order'] ?>" type='hidden' name='idPedido' id='idPedido' />
                 <!-- Button -->
