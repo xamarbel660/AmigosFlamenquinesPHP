@@ -32,7 +32,7 @@ CREATE TABLE `board` (
   `created` datetime NOT NULL,
   `capacity` int NOT NULL,
   `location` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `board`
@@ -61,8 +61,8 @@ CREATE TABLE `client` (
   `date_created_account` date NOT NULL,
   `age` int NOT NULL,
   `is_vip` tinyint(1) NOT NULL,
-  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `client`
@@ -93,7 +93,7 @@ CREATE TABLE `client_order` (
   `is_completed` tinyint(1) NOT NULL,
   `comment` varchar(100) NOT NULL,
   `id_client` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `client_order`
@@ -127,7 +127,7 @@ CREATE TABLE `order_dish` (
   `id_plate` int NOT NULL,
   `quantity` int NOT NULL,
   `notes` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `order_dish`
@@ -173,7 +173,7 @@ CREATE TABLE `plate` (
   `price` decimal(10,2) NOT NULL,
   `is_available` tinyint(1) NOT NULL,
   `name` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `plate`
@@ -205,7 +205,7 @@ CREATE TABLE `reservation` (
   `comment` varchar(50) NOT NULL,
   `id_board` int NOT NULL,
   `id_client` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `reservation`
@@ -325,6 +325,24 @@ ALTER TABLE `reservation`
   ADD CONSTRAINT `FK_Reser_Board` FOREIGN KEY (`id_board`) REFERENCES `board` (`id_board`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `FK_Reser_Client` FOREIGN KEY (`id_client`) REFERENCES `client` (`id_client`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
+
+DELIMITER $$
+CREATE TRIGGER trg_reservation_before_insert
+BEFORE INSERT ON reservation
+FOR EACH ROW
+BEGIN
+    -- Verificamos si ya existe una reserva en la misma mesa dentro de un rango de 2 horas
+    IF EXISTS (
+        SELECT 1
+        FROM reservation r
+        WHERE r.id_board = NEW.id_board
+          AND ABS(TIMESTAMPDIFF(MINUTE, r.reservation_date, NEW.reservation_date)) < 120
+    ) THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'No se puede reservar la misma mesa con menos de 2 horas de diferencia.';
+    END IF;
+END$$
+DELIMITER ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
