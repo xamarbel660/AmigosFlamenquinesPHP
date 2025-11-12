@@ -25,7 +25,7 @@ include_once("cabecera.html");
             </div>
 
             <div class="form-group col-12 mb-2">
-                <label class="col-xs-4 control-label" for="nombreCliente">Fecha añadido: </label>
+                <label class="col-xs-4 control-label" for="fechaAnyadido">Fecha añadido: </label>
                 <div class="col-xs-4">
                     <input id="fechaAnyadido" name="fechaAnyadido" class="form-control input-md" type="date">
                 </div>
