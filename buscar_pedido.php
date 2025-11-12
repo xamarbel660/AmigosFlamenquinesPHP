@@ -21,7 +21,7 @@ include_once("cabecera.html");
                 <div class="form-group">
                     <label class="col-xs-4 control-label" for="btnAceptarBuscarPedido"></label>
                     <div class="col-xs-4">
-                        <input type="submit" id="btnAceptarBuscarPedido" name="btnAceptarBuscarPedido" class="btn btn-primary" value="Aceptar" />
+                        <input type="submit" id="btnAceptarBuscarPedido" name="btnAceptarBuscarPedido" class="btn bg-secondary" value="Aceptar" />
                     </div>
                 </div>
             </fieldset>
