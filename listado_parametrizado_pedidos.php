@@ -16,7 +16,7 @@ while ($fila = mysqli_fetch_assoc($resultadoCLi)) {
 include_once("cabecera.html");
 ?>
 <div class="container" id="formularios">
-    <form class="form-horizontal row" action="mostrar_listado_pedidos_parametrizado.php" name="frmListadoParametrizadoPedidos"
+    <form class="form-horizontal row" action="proceso_buscar_pedido.php" name="frmListadoParametrizadoPedidos"
         id="frmListadoParametrizadoPedidos" method="get">
         <fieldset>
             <!-- Form Name -->
