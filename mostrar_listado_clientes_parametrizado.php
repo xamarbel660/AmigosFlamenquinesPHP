@@ -12,7 +12,7 @@ $sql = "SELECT * FROM client";
 $nombreCliente = trim($_GET["nombreCliente"] ?? "");
 $edadCliente = trim($_GET["edadCliente"] ?? "");
 $fechaAnyadido = trim($_GET["fechaAnyadido"] ?? "");
-$esVip = trim($_GET["lstEsVip"] ?? "");
+$esVip = trim($_GET["lstEsVip"] ?? "-1");
 
 $condiciones = [];
 
