@@ -4,14 +4,26 @@ include_once("config.php");
 
 $conexion = obtenerConexion();
 
+$sqlCat = "SELECT id_category, category_name FROM category;";
+
+$resultadoCat = mysqli_query($conexion, $sqlCat);
+
+$registroCliente = json_decode($_GET['cliente'], true);
+
+$categorias = "";
+while ($fila = mysqli_fetch_assoc($resultadoCat)) {
+    $categorias .= " <option value='" . $fila["id_category"] . "'>" . htmlspecialchars($fila["category_name"]) . "</option>";
+}
+
+
 
 
 // Cabecera HTML que incluye navbar
 include_once("cabecera.html");
 ?>
 <div class="container" id="formularios">
-    <form class="form-horizontal row" action="mostrar_listado_clientes_parametrizado.php" name="frmListadoParametrizadoClientes"
-        id="frmListadoParametrizadoClientes" method="get">
+    <form class="form-horizontal row" action="mostrar_listado_clientes_parametrizado.php"
+        name="frmListadoParametrizadoClientes" id="frmListadoParametrizadoClientes" method="get">
         <fieldset>
             <!-- Form Name -->
             <legend>Listado Parametrizado de Clientes</legend>
@@ -49,6 +61,16 @@ include_once("cabecera.html");
                         </select>
                     </div>
                 </div>
+            </div>
+
+            <!-- Categoria cliente -->
+            <div class="form-group col-8">
+                <label for="lstCategorias">Categoria del cliente</label>
+                <select class="form-select col-7 col-md-5" name="lstCategorias" id="lstCategorias"
+                    aria-label="Default select example">
+                    <option value="-1" selected>Elige una categoria</option>
+                    <?php echo $categorias; ?>
+                </select>
             </div>
 
             <!-- Button -->

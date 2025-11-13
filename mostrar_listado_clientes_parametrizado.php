@@ -8,11 +8,13 @@ $conexion = obtenerConexion();
 // Cabecera HTML que incluye navbar
 include_once("form_listado_parametrizado_clientes.php");
 
-$sql = "SELECT * FROM client";
+$sql = "SELECT * FROM client INNER JOIN category ON client.id_category = category.id_category";
 $nombreCliente = trim($_GET["nombreCliente"] ?? "");
 $edadCliente = trim($_GET["edadCliente"] ?? "");
 $fechaAnyadido = trim($_GET["fechaAnyadido"] ?? "");
 $esVip = trim($_GET["lstEsVip"] ?? "-1");
+$idCategory = trim($_GET['lstCategorias']?? "-1");
+
 
 $condiciones = [];
 
@@ -29,6 +31,10 @@ if ($esVip !== "-1") {
     $condiciones[] = "is_vip = " . intval($esVip);
 }
 
+if ($idCategory !== "-1") {
+    $condiciones[] = "client.id_category = " . intval($idCategory);
+}
+
 if (!empty($condiciones)) {
     $sql .= " WHERE " . implode(" AND ", $condiciones);
 }
@@ -38,10 +44,8 @@ $sql .= ";";
 
 
 
-
-
 $tabla = "<table class='table table-striped text-center mt-3' id='listadoClientes'>";
-$tabla .= "<thead><tr><th>ID-CLIENTE</th><th>NOMBRE</th><th>EDAD</th><th>ES VIP</th><th>FECHA AÑADIDO</th>";
+$tabla .= "<thead><tr><th>ID-CLIENTE</th><th>NOMBRE</th><th>EDAD</th><th>CATEGORIA</th><th>ES VIP</th><th>FECHA AÑADIDO</th>";
 $idCliente = "";
 
     
@@ -59,6 +63,7 @@ while ($fila = mysqli_fetch_assoc($resultado)) {
     $tabla .= "<td>". $fila["id_client"] ."</td>";
     $tabla .= "<td>". $fila["name"] ."</td>";
     $tabla .= "<td>". $fila["age"] ."</td>";
+    $tabla .= "<td>". $fila["category_name"] ."</td>";
     $tabla .= "<td>". $esVip ."</td>";
     $fecha = implode('-',array_reverse(explode('-',$fila['date_created_account'])));
     $tabla .= "<td>". $fecha ."</td>";

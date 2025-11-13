@@ -6,6 +6,7 @@ $idCliente = trim($_POST['idCliente']);
 $nombre = trim($_POST['nombreCliente']);
 $age = intval(trim($_POST['edadCliente']));
 $isVip = intval(trim($_POST['radioVIP']));
+$idCategory = intval(trim($_POST['lstCategorias']));
 
 
 // No validamos, suponemos que la entrada de datos es correcta
@@ -13,7 +14,8 @@ $isVip = intval(trim($_POST['radioVIP']));
 $sql = "UPDATE client 
         SET name = '$nombre',
         age = $age,
-        is_vip = $isVip
+        is_vip = $isVip,
+        id_category = $idCategory
         WHERE id_client = $idCliente
 ;";
 // Ejecutar consulta
