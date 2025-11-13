@@ -53,6 +53,28 @@ INSERT INTO `board` (`id_board`, `created`, `capacity`, `location`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `category`
+--
+
+CREATE TABLE `category` (
+  `id_category` int NOT NULL,
+  `category_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `category`
+--
+
+INSERT INTO category (id_category, category_name) 
+VALUES 
+(1, 'Habitual'),
+(2, 'Exempleado'),
+(3, 'Empleado'),
+(4, 'Afiliado');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `client`
 --
 
@@ -61,24 +83,26 @@ CREATE TABLE `client` (
   `date_created_account` date NOT NULL,
   `age` int NOT NULL,
   `is_vip` tinyint(1) NOT NULL,
-  `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL
+  `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `id_category` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `client`
 --
 
-INSERT INTO `client` (`id_client`, `date_created_account`, `age`, `is_vip`, `name`) VALUES
-(1, '2023-01-15', 28, 1, 'Ana López'),
-(2, '2022-05-20', 45, 0, 'Carlos García'),
-(3, '2024-02-10', 19, 0, 'María Fernández'),
-(4, '2023-11-30', 52, 1, 'Javier Martínez'),
-(5, '2022-08-19', 34, 0, 'Lucía Sánchez'),
-(6, '2024-01-05', 65, 0, 'David Pérez'),
-(7, '2023-07-22', 29, 1, 'Sofía Gómez'),
-(8, '2022-03-10', 41, 0, 'Pedro Rodríguez'),
-(9, '2024-03-18', 22, 0, 'Elena Jiménez'),
-(10, '2023-09-01', 37, 1, 'Miguel Ruiz');
+-- CORRECCIÓN:
+INSERT INTO `client` (`id_client`, `date_created_account`, `age`, `is_vip`, `name`, `id_category`) VALUES
+(1, '2023-01-15', 28, 1, 'Ana López', 1),
+(2, '2022-05-20', 45, 0, 'Carlos García', 2),
+(3, '2024-02-10', 19, 0, 'María Fernández', 1),
+(4, '2023-11-30', 52, 1, 'Javier Martínez', 3),
+(5, '2022-08-19', 34, 0, 'Lucía Sánchez', 4),
+(6, '2024-01-05', 65, 0, 'David Pérez', 1),
+(7, '2023-07-22', 29, 1, 'Sofía Gómez', 1),
+(8, '2022-03-10', 41, 0, 'Pedro Rodríguez', 2),
+(9, '2024-03-18', 22, 0, 'Elena Jiménez', 3),
+(10, '2023-09-01', 37, 1, 'Miguel Ruiz', 4);
 
 -- --------------------------------------------------------
 
@@ -234,10 +258,17 @@ ALTER TABLE `board`
   ADD PRIMARY KEY (`id_board`);
 
 --
+-- Indices de la tabla `category`
+--
+ALTER TABLE `category`
+  ADD PRIMARY KEY (`id_category`);
+
+--
 -- Indices de la tabla `client`
 --
 ALTER TABLE `client`
-  ADD PRIMARY KEY (`id_client`);
+  ADD PRIMARY KEY (`id_client`),
+  ADD KEY `FK_Client_Category` (`id_category`);
 
 --
 -- Indices de la tabla `client_order`
@@ -278,6 +309,12 @@ ALTER TABLE `board`
   MODIFY `id_board` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
+-- AUTO_INCREMENT de la tabla `category`
+--
+ALTER TABLE `category`
+  MODIFY `id_category` int NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `client`
 --
 ALTER TABLE `client`
@@ -304,6 +341,12 @@ ALTER TABLE `reservation`
 --
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `client`
+--
+ALTER TABLE `client`
+  ADD CONSTRAINT `FK_Client_Category` FOREIGN KEY (`id_category`) REFERENCES `category` (`id_category`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `client_order`
