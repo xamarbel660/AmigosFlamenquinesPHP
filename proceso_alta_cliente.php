@@ -7,6 +7,7 @@ $nombre = trim($_POST['nombreCliente']);
 $age = intval(trim($_POST['edadCliente']));
 $isVip = intval(trim($_POST['radioVIP']));
 $dateCreatedAccount = date('Y-m-d');
+$idCategory = intval(trim($_POST['lstCategorias']));
 
 
 
@@ -14,8 +15,8 @@ $dateCreatedAccount = date('Y-m-d');
 
 // Definir insert
 // El campo is_completed se pone a 0 por defecto, porque cuando se crea el pedido, no está completado
-$sql = "INSERT INTO client(name, age, is_vip, date_created_account) 
-                VALUES ('$nombre', $age, $isVip, '$dateCreatedAccount');";
+$sql = "INSERT INTO client(name, age, is_vip, date_created_account, id_category) 
+                VALUES ('$nombre', $age, $isVip, '$dateCreatedAccount', $idCategory);";
 
 // Ejecutar consulta
 $resultado = mysqli_query($conexion, $sql);

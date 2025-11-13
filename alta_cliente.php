@@ -1,6 +1,20 @@
 <?php
+require_once("config.php");
+
+$conexion = obtenerConexion();
+
+$sqlCat = "SELECT id_category, category_name FROM category;";
+
+$resultadoCat = mysqli_query($conexion, $sqlCat);
+
+$categorias = "";
+while ($fila = mysqli_fetch_assoc($resultadoCat)) {
+    $categorias .= " <option value='" . $fila["id_category"] . "'>" . htmlspecialchars($fila["category_name"]) . "</option>";
+}
+
 // Cabecera HTML que incluye navbar
 include_once("cabecera.html");
+
 ?>
 
 <div class="container" id="formularios">
@@ -27,9 +41,17 @@ include_once("cabecera.html");
                     </div>
                 </div>
 
+                <!-- Categoria cliente -->
+                <div class="form-group col-3">
+                    <label for="lstCategorias">Categoria del cliente</label>
+                    <select class="form-select col-7 col-md-5" name="lstCategorias" id="lstCategorias" aria-label="Default select example">
+                            <?php echo $categorias; ?>
+                    </select>
+                </div>
+
                 <!-- Radio VIP -->
                 <div class="form-group col-3">
-                    <label for="">¿Cliente VIP?</label>
+                    <label for="radioVIP">¿Cliente VIP?</label>
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="radioVIP" id="radioVIPSi " value="1">
                         <label class="form-check-label" for="radioVIPSi">
@@ -43,7 +65,12 @@ include_once("cabecera.html");
                         </label>
                     </div>
                 </div>
+
+                
+
+               
             </div>
+
             <!-- Button -->
             <div class="form-group">
                 <label class="col-xs-4 control-label" for="btnAceptarAltaCliente"></label>

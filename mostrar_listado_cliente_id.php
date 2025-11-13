@@ -9,7 +9,7 @@ $conexion = obtenerConexion();
 include_once("cabecera.html");
 
 $tabla = "<table class='table table-striped text-center ' id='listadoClientes'>";
-$tabla .= "<thead><tr><th>ID-CLIENTE</th><th>NOMBRE</th><th>EDAD</th><th>ES VIP</th><th>FECHA AÑADIDO</th>";
+$tabla .= "<thead><tr><thead><tr><th>ID-CLIENTE</th><th>NOMBRE</th><th>EDAD</th><th>CATEGORIA</th><th>ES VIP</th><th>FECHA AÑADIDO</th>";
 $tabla .= "<th>ACCIÓN</th>";
 $tabla.= "</tr></thead><tbody>";
 
@@ -17,10 +17,10 @@ $idCliente = "";
 $vaBuscarId = isset($_GET["idClienteBuscar"]);
 if ($vaBuscarId && $_GET["idClienteBuscar"] != "") {
     $idCliente = $_GET["idClienteBuscar"];
-    $sql = "SELECT * FROM client WHERE id_client = $idCliente ;";
+    $sql = "SELECT * FROM client INNER JOIN category ON client.id_category = category.id_category WHERE id_client = $idCliente ;";
     
 }else{
-    $sql = "SELECT * FROM client ORDER BY date_created_account";
+    $sql = "SELECT * FROM client INNER JOIN category ON client.id_category = category.id_category ORDER BY date_created_account";
     
 }
 
@@ -38,6 +38,7 @@ while ($fila = mysqli_fetch_assoc($resultado)) {
     $tabla .= "<td>". $fila["id_client"] ."</td>";
     $tabla .= "<td>". $fila["name"] ."</td>";
     $tabla .= "<td>". $fila["age"] ."</td>";
+    $tabla .= "<td>". $fila["category_name"] ."</td>";
     $tabla .= "<td>". $esVip ."</td>";
     $fecha = implode('-',array_reverse(explode('-',$fila['date_created_account'])));
     $tabla .= "<td>". $fecha ."</td>";

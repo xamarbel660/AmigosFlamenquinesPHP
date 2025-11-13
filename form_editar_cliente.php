@@ -1,10 +1,24 @@
 <?php
-include_once("config.php");
-
+require_once("config.php");
 
 $conexion = obtenerConexion();
 
+$sqlCat = "SELECT id_category, category_name FROM category;";
+
+$resultadoCat = mysqli_query($conexion, $sqlCat);
+
 $registroCliente = json_decode($_GET['cliente'], true);
+
+$categorias = "";
+while ($fila = mysqli_fetch_assoc($resultadoCat)) {
+    if(intval($registroCliente['id_category']) == intval($fila["id_category"])){
+         $categorias .= " <option value='" . $fila["id_category"] . "' selected>" . htmlspecialchars($fila["category_name"]) . "</option>";
+    }else{
+        $categorias .= " <option value='" . $fila["id_category"] . "'>" . htmlspecialchars($fila["category_name"]) . "</option>";
+    }
+}
+
+
 
 
 
@@ -49,7 +63,14 @@ include_once("cabecera.html");
                             max="120" value="<?php echo $registroCliente['age'] ?>">
                     </div>
                 </div>
-                <div class="form-group col-3">
+                <div class="form-group col-6 col-lg-3">
+                        <!-- Categoria cliente -->
+                    <div class="form-group">
+                        <label for="lstCategorias">Categoria del cliente</label>
+                        <select class="form-select col-7 col-md-5" name="lstCategorias" id="lstCategorias" aria-label="Default select example">
+                                <?php echo $categorias; ?>
+                        </select>
+                    </div>
                     <label for="">¿Cliente VIP?</label>
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="radioVIP" id="radioVIPSi" value="1" <?php if (intval($registroCliente['is_vip']) == 1) {
